@@ -18,8 +18,14 @@ async def on_message(message):
 
     if ('randy' in msg or ('i' in msg and message.author.id == 133742150725664769)) and 'get pizza' in msg:
         if random.random() > 0.75:
-            await message.reply(content='yes you should get pizza')
+            if message.author.id == 133742150725664769:
+                await message.reply(content='yes you should get pizza')
+            else: 
+                await message.reply(content='yes randy should get pizza')
         else: 
-            await message.reply(content='not you shouldn\'t get pizza')
+            if message.author.id == 133742150725664769:
+                await message.reply(content='no you shouldn\'t get pizza')
+            else:
+                await message.reply(content='no randy shouldn\'t get pizza')
 
 client.run(os.getenv('DISCORD_TOKEN'))
