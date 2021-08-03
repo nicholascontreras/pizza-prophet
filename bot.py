@@ -16,7 +16,7 @@ async def on_message(message):
 
     msg = message.content.lower()
 
-    if (' randy ' in msg or (' i ' in msg and message.author.id == 133742150725664769)) and ' get pizza ' in msg:
+    if ('randy' in msg or (' i ' in msg and message.author.id == 133742150725664769)) and 'get pizza' in msg:
         if random.random() > 0.75:
             if message.author.id == 133742150725664769:
                 await message.reply(content='yes you should get pizza')
