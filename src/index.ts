@@ -1,4 +1,4 @@
-import { Client, Guild, GuildMember, Message, MessageType } from 'discord.js';
+import { Client, GatewayIntentBits, Guild, GuildMember, Message, MessageType } from 'discord.js';
 import { exit } from 'process';
 
 // Fetch an environment variable and quit program if it's not found
@@ -39,7 +39,7 @@ const getFoodName = async (food: Food) : Promise<string> => {
 };
 
 const DISCORD_TOKEN = getEnvVar('DISCORD_TOKEN');
-const client = new Client({ intents: [] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
 client.once('ready', () => {
     console.log('Bot ready');
@@ -52,9 +52,9 @@ client.on("messageCreate", async (message: Message) => {
     }
 
     // Ignore messages not from the authorized user
-    if (message.author.id != '133742150725664769') {
-        return;
-    } 
+   if (message.author.id != '133742150725664769') {
+       return;
+   } 
 
     // Ignore messages that don't mention me explicity
     if (message.content.includes("@here") || 
@@ -72,7 +72,7 @@ client.on("messageCreate", async (message: Message) => {
 // Process a message sent to me to determine if we should reply
 const processMessage = async (message: Message) : Promise<void> => {
     const food = await detectFoodMentionedInMessage(message.content);
-    if (!food) {
+    if (food == undefined) {
         return;
     }
 
@@ -116,16 +116,17 @@ const transformBot = async (food: Food) : Promise<void> => {
     }
 
     const fileName = newName.split(' ')[0].toLowerCase();
-    await client.user.setAvatar(`../images/${fileName}.png`);
+    await client.user.setAvatar(`images/${fileName}.png`);
 };
 
 // Make a determination and reply to the message with our answer
 const respondToMessage = async (message: Message, food: Food) : Promise<void> => {
     let response: string;
+    const foodName = await getFoodName(food);
     if (Math.random() < 0.75) {
-        response = `Yes you should get ${getFoodName(food)}`;
+        response = `Yes you should get ${foodName}`;
     } else {
-        response = `No you shouldn't get ${getFoodName(food)}`;
+        response = `No you shouldn't get ${foodName}`;
     }
 
     await message.reply(response);
