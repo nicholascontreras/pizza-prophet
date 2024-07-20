@@ -1,0 +1,25 @@
+{
+  "name": "pizza-prophet",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "compile": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholascontreras/pizza-prophet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicholascontreras/pizza-prophet/issues"
+  },
+  "homepage": "https://github.com/nicholascontreras/pizza-prophet#readme",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3"
+  }
+}
