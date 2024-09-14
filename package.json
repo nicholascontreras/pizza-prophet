@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nicholascontreras/pizza-prophet#readme",
   "devDependencies": {
+    "@types/node": "^22.5.5",
     "typescript": "^5.5.3"
   },
   "dependencies": {

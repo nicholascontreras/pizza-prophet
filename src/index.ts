@@ -13,7 +13,7 @@ const getEnvVar = (varName: string): string => {
 };
 
 // Food type definitions and converters
-enum Food { PIZZA, CHIPOTLE }
+enum Food { PIZZA, CHIPOTLE, BJS }
 
 const detectFoodMentionedInMessage = async (message: string) : Promise<Food | undefined> => {
     message = message.toLowerCase();
@@ -21,6 +21,8 @@ const detectFoodMentionedInMessage = async (message: string) : Promise<Food | un
         return Food.PIZZA;
     } else if (message.includes('chipotle')) {
         return Food.CHIPOTLE;
+    } else if (message.includes('bjs') || message.includes('bj\'s')) {
+        return Food.BJS;
     }
 };
 
@@ -28,6 +30,7 @@ const getBotName = async (food: Food) : Promise<string> => {
     switch (food) {
         case Food.PIZZA: return 'Pizza Prophet';
         case Food.CHIPOTLE: return 'Chipotle Chaplain';
+        case Food.BJS: return 'BJ\'s Bishop'
     }
 };
 
@@ -35,6 +38,7 @@ const getFoodName = async (food: Food) : Promise<string> => {
     switch (food) {
         case Food.PIZZA: return 'pizza';
         case Food.CHIPOTLE: return 'Chipotle';
+        case Food.BJS: return 'BJ\'s'
     }
 };
 
