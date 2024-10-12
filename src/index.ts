@@ -13,7 +13,7 @@ const getEnvVar = (varName: string): string => {
 };
 
 // Food type definitions and converters
-enum Food { PIZZA, CHIPOTLE, BJS, SUBWAY }
+enum Food { PIZZA, CHIPOTLE, BJS, SUBWAY, DAIRY_QUEEN }
 
 const detectFoodMentionedInMessage = async (message: string) : Promise<Food | undefined> => {
     message = message.toLowerCase();
@@ -25,6 +25,8 @@ const detectFoodMentionedInMessage = async (message: string) : Promise<Food | un
         return Food.BJS;
     } else if (message.includes('subway')) {
         return Food.SUBWAY;
+    } else if (message.includes('dairy queen') || message.includes(' dq ')) {
+        return Food.DAIRY_QUEEN;
     }
 };
 
@@ -34,6 +36,7 @@ const getBotName = async (food: Food) : Promise<string> => {
         case Food.CHIPOTLE: return 'Chipotle Chaplain';
         case Food.BJS: return 'BJ\'s Bishop';
         case Food.SUBWAY: return 'Subway Shaman';
+        case Food.DAIRY_QUEEN: return 'Dairy Queen Deacon';
     }
 };
 
@@ -43,6 +46,7 @@ const getFoodName = async (food: Food) : Promise<string> => {
         case Food.CHIPOTLE: return 'Chipotle';
         case Food.BJS: return 'BJ\'s';
         case Food.SUBWAY: return 'Subway';
+        case Food.DAIRY_QUEEN: return 'Dairy Queen';
     }
 };
 
@@ -123,7 +127,7 @@ const transformBot = async (food: Food) : Promise<void> => {
         return;
     }
 
-    const fileName = newName.split(' ')[0].toLowerCase();
+    const fileName = (await getFoodName(food)).toLowerCase();
     await client.user.setAvatar(`images/${fileName}.png`);
 };
 
