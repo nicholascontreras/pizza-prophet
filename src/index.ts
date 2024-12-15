@@ -13,7 +13,7 @@ const getEnvVar = (varName: string): string => {
 };
 
 // Food type definitions and converters
-enum Food { PIZZA, CHIPOTLE, BJS, SUBWAY, DAIRY_QUEEN }
+enum Food { PIZZA, CHIPOTLE, BJS, SUBWAY, DAIRY_QUEEN, MCDONALDS, CRUMBL_COOKIES }
 
 const detectFoodMentionedInMessage = async (message: string) : Promise<Food | undefined> => {
     message = message.toLowerCase();
@@ -27,6 +27,10 @@ const detectFoodMentionedInMessage = async (message: string) : Promise<Food | un
         return Food.SUBWAY;
     } else if (message.includes('dairy queen') || message.includes(' dq ')) {
         return Food.DAIRY_QUEEN;
+    } else if (message.includes('mcdonald') || message.includes('mc donald')) {
+        return Food.MCDONALDS;
+    } else if (message.includes('crumbl')) {
+        return Food.CRUMBL_COOKIES;
     }
 };
 
@@ -37,6 +41,8 @@ const getBotName = async (food: Food) : Promise<string> => {
         case Food.BJS: return 'BJ\'s Bishop';
         case Food.SUBWAY: return 'Subway Shaman';
         case Food.DAIRY_QUEEN: return 'Dairy Queen Deacon';
+        case Food.MCDONALDS: return 'McDonald\'s Messiah';
+        case Food.CRUMBL_COOKIES: return 'Crumbl Cookies Cleric';
     }
 };
 
@@ -47,6 +53,8 @@ const getFoodName = async (food: Food) : Promise<string> => {
         case Food.BJS: return 'BJ\'s';
         case Food.SUBWAY: return 'Subway';
         case Food.DAIRY_QUEEN: return 'Dairy Queen';
+        case Food.MCDONALDS: return 'McDonald\'s';
+        case Food.CRUMBL_COOKIES: return 'Crumbl Cookies';
     }
 };
 
@@ -62,11 +70,6 @@ client.on("messageCreate", async (message: Message) => {
         console.error('Cannot listen for messages, not logged in as a user');
         return;
     }
-
-    // Ignore messages not from the authorized user
-   if (message.author.id != '133742150725664769') {
-       return;
-   } 
 
     // Ignore messages that don't mention me explicity
     if (message.content.includes("@here") || 
@@ -84,7 +87,7 @@ client.on("messageCreate", async (message: Message) => {
 // Process a message sent to me to determine if we should reply
 const processMessage = async (message: Message) : Promise<void> => {
     const food = await detectFoodMentionedInMessage(message.content);
-    if (food == undefined) {
+    if (food === undefined) {
         return;
     }
 
