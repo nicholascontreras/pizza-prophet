@@ -59,7 +59,7 @@ const getFoodName = async (food: Food) : Promise<string> => {
 };
 
 const DISCORD_TOKEN = getEnvVar('DISCORD_TOKEN');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 
 client.once('ready', () => {
     console.log('Bot ready');
